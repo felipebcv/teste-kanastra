@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./php/Dockerfile
+    container_name: teste_kanastra
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - app-network
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public
+    deploy:
+      resources:
+        limits:
+          cpus: '6'
+          memory: 2048M
+        reservations:
+          cpus: '2'
+          memory: 1024M
+  db:
+    image: mysql:8.0
+    container_name: mysql_kanastra
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: kanastra_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 1024M
+        reservations:
+          cpus: '2'
+          memory: 1024M
+
+networks:
+  app-network:
+    driver: bridge
