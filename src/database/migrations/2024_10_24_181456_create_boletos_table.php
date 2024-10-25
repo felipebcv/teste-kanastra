@@ -19,6 +19,8 @@ return new class extends Migration
             $table->decimal('amount', 15, 2);
             $table->date('dueDate');
             $table->uuid('boletoId')->unique();
+            $table->enum('generated', ['Y', 'N'])->default('N');
+            $table->enum('sendMail', ['Y', 'N'])->default('N');
             $table->timestamps();
         });
     }

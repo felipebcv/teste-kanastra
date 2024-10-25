@@ -14,12 +14,12 @@ services:
       - app-network
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html/public
-    command: /bin/sh -c 'chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && apache2-foreground'
+    command: /bin/sh -c 'chmod -R 777 /var/www/html/storage /var/www/html/bootstrap/cache && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && apache2-foreground & php artisan queue:work'
     deploy:
       resources:
         limits:
           cpus: '6'
-          memory: 2048M
+          memory: 4096M
         reservations:
           cpus: '2'
           memory: 1024M
@@ -40,11 +40,41 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '2'
-          memory: 1024M
+          cpus: '6'
+          memory: 4096M
         reservations:
           cpus: '2'
           memory: 1024M
+
+  redis:
+    build:
+      context: .
+      dockerfile: ./redis/Dockerfile
+    container_name: redis_kanastra
+    ports:
+      - "6379:6379"
+    sysctls:
+      - net.core.somaxconn=511
+    networks:
+      - app-network
+
+  boleto_listener:
+    build:
+      context: .
+      dockerfile: ./python/boleto/Dockerfile
+    networks:
+      - app-network
+    volumes:
+      - ./python/boleto/src:/app 
+
+  email_sender:
+    build:
+      context: .
+      dockerfile: ./python/email/Dockerfile
+    volumes:
+      - ./python/email/src:/app
+    networks:
+      - app-network
 
 networks:
   app-network:

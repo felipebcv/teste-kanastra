@@ -21,11 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 use App\Http\Controllers\BoletoController;
 
-Route::get('/boletos', [BoletoController::class, 'index']);
-Route::get('/boletos/{id}', [BoletoController::class, 'show']);
-Route::post('/boletos', [BoletoController::class, 'store']);
-Route::put('/boletos/{boleto}', [BoletoController::class, 'update']);
-Route::delete('/boletos/{boleto}', [BoletoController::class, 'destroy']);
-
-// Rota para upload do CSV
 Route::post('/boletos/upload', [BoletoController::class, 'uploadCsv']);

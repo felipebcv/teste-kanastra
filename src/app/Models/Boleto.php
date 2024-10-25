@@ -15,7 +15,9 @@ class Boleto extends Model
         'email',
         'amount',
         'dueDate',
-        'boletoId'
+        'boletoId',
+        'generated',
+        'sendMail',
     ];
 
     protected $casts = [

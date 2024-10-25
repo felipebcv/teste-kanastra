@@ -5,36 +5,54 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use App\Services\BoletoService;
 use App\Repositories\Contracts\BoletoRepositoryInterface;
-use App\Models\Boleto;
 use Mockery;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class BoletoServiceTest extends TestCase
 {
-    public function testCreateBoleto()
+    protected $boletoData;
+
+    protected function setUp(): void
     {
-        $data = [
-            'name' => 'John Doe',
-            'governmentId' => '11111111111',
-            'email' => 'johndoe@example.com',
-            'amount' => 1000.00,
-            'dueDate' => '2022-10-12',
-            'boletoId' => '1adb6ccf-ff16-467f-bea7-5f05d494280f',
+        parent::setUp();
+        $this->boletoData = [
+            'name' => 'Teste Nome',
+            'governmentId' => '12345678901',
+            'email' => 'teste@example.com',
+            'amount' => 100.50,
+            'dueDate' => '2024-11-10',
+            'boletoId' => 'ABC123',
         ];
+    }
 
-        $boleto = new Boleto($data);
-
+    public function test_create_boleto_success()
+    {
         $boletoRepoMock = Mockery::mock(BoletoRepositoryInterface::class);
-        $boletoRepoMock->shouldReceive('findByBoletoId')->once()->andReturn(null);
-        $boletoRepoMock->shouldReceive('create')->once()->andReturn($boleto);
+        $boletoRepoMock->shouldReceive('create')
+            ->once()
+            ->with($this->boletoData)
+            ->andReturn(true);
 
         $boletoService = new BoletoService($boletoRepoMock);
+        $result = $boletoService->createBoleto($this->boletoData);
+        $this->assertTrue($result);
+    }
 
-        Log::shouldReceive('info')->twice();
+    public function test_create_boleto_failure()
+    {
+        $boletoRepoMock = Mockery::mock(BoletoRepositoryInterface::class);
+        $boletoRepoMock->shouldReceive('create')
+            ->once()
+            ->with($this->boletoData)
+            ->andReturn(false);
 
-        $result = $boletoService->createBoleto($data);
-
-        $this->assertInstanceOf(Boleto::class, $result);
-        $this->assertEquals($data['name'], $result->name);
+        $boletoService = new BoletoService($boletoRepoMock);
+        $result = $boletoService->createBoleto($this->boletoData);
+        $this->assertFalse($result);
+    }
+    protected function tearDown(): void
+    {
+        Mockery::close();
+        parent::tearDown();
     }
 }
