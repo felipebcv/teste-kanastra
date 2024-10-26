@@ -96,7 +96,11 @@ Este projeto consiste em um sistema de processamento de arquivos CSV, geração 
    php artisan test
    ```
 
-3. Este sistema foi projetado para fins de teste e pode ser aprimorado com recursos adicionais, como autenticação, documentação com L5 Swagger, e outras melhorias.
+3. Este sistema foi projetado para fins de teste e pode ser aprimorado com recursos adicionais, como autenticação, documentação com L5 Swagger, e outras melhorias, também serviços de mensageria como Service Bus, Rabbitmq e outros.
+
+4. No caso de um sistema em produção, minha sugestão seria usar microssrviços, subindo em Pods separados e matendo segregado cada fluxo, como entrada de dados, geração de boletoes, envio de boletos e um container para reprocessamento, onde seria reprocessados os que por algum motivo deram erro, e devolvendo o motivo do reprocessamento, também poderiamos parametrizar a quantidade de retries.
+
+5. Para cada etapa, poderia também ser criado um StepControl, para consulta de cada etapa do processo, desde a subida do .cvs no sistema até o ultimo pode que é o envio de email com sucesso ou registro de erro em qul etapa paraou, asssim poderiamos continuar de onde paramos.
 
 4. Para otimizar o uso do Docker após a primeira instalação, uma vez que o diretório `vendor` tenha sido criado, substitua o comando atual no `docker-compose.yml`:
 
