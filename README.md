@@ -102,7 +102,9 @@ Este projeto consiste em um sistema de processamento de arquivos CSV, geração 
 
 5. Para cada etapa, poderia também ser criado um StepControl, para consulta de cada etapa do processo, desde a subida do .cvs no sistema até o ultimo pode que é o envio de email com sucesso ou registro de erro em qul etapa paraou, asssim poderiamos continuar de onde paramos.
 
-4. Para otimizar o uso do Docker após a primeira instalação, uma vez que o diretório `vendor` tenha sido criado, substitua o comando atual no `docker-compose.yml`:
+6. Afim de estudo sobre a linguagem GO que é utilizado na Kanastra, fiz uma tentativa de contruir um Worker com a linguagem, está subindo e executando, mas ainda tem algum ponto de ajuste para funcionar, então deixo o versionamento aqui apenas a titulo de demonstrar minha tentativa, não conhecia a linguagem e nunca tinha tido contato, mas li a respeito e achei interessante e achei legal em tentar criar o Worker.
+
+7. Para otimizar o uso do Docker após a primeira instalação, uma vez que o diretório `vendor` tenha sido criado, substitua o comando atual no `docker-compose.yml`:
 
    **Comando atual**:
    
