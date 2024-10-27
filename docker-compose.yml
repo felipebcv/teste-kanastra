@@ -14,7 +14,7 @@ services:
       - app-network
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html/public
-    command: /bin/sh -c 'chmod -R 777 /var/www/html/storage/* /var/www/html/bootstrap/cache/* && chown -R www-data:www-data /var/www/html/storage/* /var/www/html/bootstrap/cache/* && apache2-foreground && composer install && php artisan queue:work'
+    command: /bin/sh -c 'chmod -R 777 /var/www/html/storage/* /var/www/html/bootstrap/cache/* && chown -R www-data:www-data /var/www/html/storage/* /var/www/html/bootstrap/cache/* && apache2-foreground & php artisan queue:work'
     restart: always
     deploy:
       resources:

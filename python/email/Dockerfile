@@ -8,7 +8,7 @@ RUN pip install mysql-connector-python
 WORKDIR /app
 
 # Copia o arquivo de listener para o container
-COPY ./python/email/src/email_sender.py .
+COPY ./python/email/src .
 
 # Comando para rodar o script
-CMD ["python", "email_sender.py"]
+CMD ["python", "main.py"]
