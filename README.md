@@ -89,7 +89,7 @@ Este projeto consiste em um sistema de processamento de arquivos CSV, geração 
 
 ## Considerações Finais
 
-1. O arquivo `.env` está incluído para facilitar o setup inicial. Em um ambiente real, o `.env` não deve ser versionado.
+1. O arquivo `.env` e o diretório `vendor` foram incluídos para facilitar o setup inicial. Em um ambiente real, o `.env` e `vendor` não devem ser versionado.
 2. Para executar testes unitários e de features, use o comando:
 
    ```bash

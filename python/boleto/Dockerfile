@@ -8,7 +8,7 @@ RUN pip install mysql-connector-python
 WORKDIR /app
 
 # Copia o arquivo de listener para o container
-COPY ./python/boleto/src/boleto_listener.py .
+COPY ./python/boleto/src .
 
 # Comando para rodar o script
-CMD ["python", "boleto_listener.py"]
+CMD ["python", "main.py"]

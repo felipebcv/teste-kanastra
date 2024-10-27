@@ -7,12 +7,10 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     curl \
     zip \
-    # supervisor \
     && docker-php-ext-install pdo pdo_mysql zip
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY ./php/custom-php.ini /usr/local/etc/php/conf.d/
-# COPY ./php/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN pecl install redis && docker-php-ext-enable redis
 
