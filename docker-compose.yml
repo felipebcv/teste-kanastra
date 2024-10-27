@@ -65,6 +65,8 @@ services:
       dockerfile: ./python/boleto/Dockerfile
     networks:
       - app-network
+    depends_on:
+      - db
     volumes:
       - ./python/boleto/src:/app 
 
@@ -76,6 +78,19 @@ services:
       - ./python/email/src:/app
     networks:
       - app-network
+
+  # go_listener:
+  #   build:
+  #     context: .
+  #     dockerfile: ./go_teste_estudo/Dockerfile
+  #   networks:
+  #     - app-network
+  #   depends_on:
+  #     - db
+  #   restart: always
+  #   volumes:
+  #     - ./go_teste_estudo/src:/app
+  #   command: /bin/sh -c 'go build -o main . && go run main.go'
 
 networks:
   app-network:
